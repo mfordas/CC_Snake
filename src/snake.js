@@ -6,14 +6,26 @@ class Snake {
     this.y = y;
     this.speed = 3;
     this.direction = null;
+    this.tailLength = 0;
+    this.tail = [];
   }
+
   draw() {
     ctx.fillStyle = 'green';
     ctx.fillRect(this.x, this.y, 20, 20);
+    for (let i = 0; i < this.tail.length; i++) {
+      ctx.fillRect(this.tail[i].x, this.tail[i].y, 20, 20);
+    }
   }
   setDirection(direction) {
     this.direction = direction;
   }
+
+  // funkcja wydłużająca węża w związku z brakiem jedzenia
+  expandSnake() {
+    this.tailLength++;
+  }
+
   move() {
     if (!this.direction) return;
 
@@ -31,7 +43,10 @@ class Snake {
     //check if hit sth
   }
   tailMove() {
-    //tail must follow head
+    for (let i = 0; i < this.tail.length - 1; i++) {
+      this.tail[i] = this.tail[i + 1];
+    }
+    this.tail[this.tailLength] = { x: this.x, y: this.y };
   }
 }
 

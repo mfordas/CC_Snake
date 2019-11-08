@@ -28,6 +28,8 @@ document.addEventListener('keypress', ({ keyCode }) => {
   if (keyCode === 68 || keyCode == 100) snake.setDirection('RIGHT');
   if (keyCode === 87 || keyCode == 119) snake.setDirection('UP');
   if (keyCode === 83 || keyCode == 115) snake.setDirection('DOWN');
+  //Klawisz "K" do wydłużania węża
+  if (keyCode === 107) snake.expandSnake();
 });
 
 requestAnimationFrame(gameLoop);
