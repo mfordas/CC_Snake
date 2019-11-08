@@ -5,16 +5,21 @@ class Snake {
     this.x = x;
     this.y = y;
     this.speed = 3;
+    this.cell = 20;
     this.direction = null;
     this.tailLength = 0;
     this.tail = [];
   }
 
   draw() {
-    ctx.fillStyle = 'green';
-    ctx.fillRect(this.x, this.y, 20, 20);
+    //ctx.fillStyle = 'green';
+    ctx.fillRect(this.x, this.y, this.cell, this.cell);
     for (let i = 0; i < this.tail.length; i++) {
-      ctx.fillRect(this.tail[i].x, this.tail[i].y, 20, 20);
+      ctx.fillStyle = (i== this.tail.length - 1)? 'green' : "red";
+      ctx.fillRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
+
+      ctx.strokeStyle = 'white';
+      ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
     }
   }
   setDirection(direction) {
