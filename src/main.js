@@ -7,16 +7,25 @@ export const cw = canvas.width / 20;
 export const ch = canvas.height / 20;
 
 const snake = new Snake(50, 50);
-const wall = new Wall(cw / 2, ch / 2);
+
+
+const background = new Image();
+background.src = "../src/walls/background.jpg";
+
+const walls = new Wall();
+const itemsFirstRow = walls.addItemsToFirstRow();
+const itemsSecondRow = walls.addItemsToSecondRow();
 
 const gameLoop = () => {
-  ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, canvas.width, canvas.height); //tło
+  ctx.drawImage(background,0,0);
+  //ctx.fillStyle = 'white';
+  //ctx.fillRect(0, 0, cw, ch); //tło
   snake.move();
   snake.tailMove();
   snake.onHit();
   snake.draw();
-  wall.draw();
+  walls.drawWalls(itemsFirstRow, itemsSecondRow);
+  
 
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
@@ -31,5 +40,7 @@ document.addEventListener('keypress', ({ keyCode }) => {
   //Klawisz "K" do wydłużania węża
   if (keyCode === 107) snake.expandSnake();
 });
+
+console.log(itemsFirstRow[0]);
 
 requestAnimationFrame(gameLoop);
