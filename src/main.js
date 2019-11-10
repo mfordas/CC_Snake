@@ -1,5 +1,6 @@
 import Snake from './snake';
 import Wall from './wall';
+import FoodManager from './foodManager';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
@@ -7,6 +8,8 @@ export const cw = canvas.width;
 export const ch = canvas.height;
 
 let failed = false;
+export const snake = new Snake(50, 50);
+export const fm = new FoodManager(24);
 
 
 const background = new Image();
@@ -22,6 +25,7 @@ const gameLoop = () => {
   //ctx.fillRect(0, 0, cw, ch); //tło
   snake.move();
   snake.tailMove();
+  fm.manageFood();
   snake.draw();
   if (snake.onHit(/*walls*/)) {
     gameOver(); 
