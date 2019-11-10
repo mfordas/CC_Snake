@@ -47,16 +47,16 @@ class Snake {
     }
   }
   
-  onHit(/*walls*/) {
+  onHit(walls) {
     
     
-    //let w = walls.wallsFirstRow.concat(walls.wallsSecondRow);
+    let w = walls.wallsFirstRow.concat(walls.wallsSecondRow);
 
     //tmp code
-    let wa = new Wall();
-    wa.wallsFirstRow.push(new Wall(canvas.width/40,canvas.height/40));
-    let w = [];
-    w.push(wa.wallsFirstRow[0]);
+    //let wa = new Wall();
+    //wa.wallsFirstRow.push(new Wall(canvas.width/40,canvas.height/40));
+    //let w = [];
+    //w.push(wa.wallsFirstRow[0]);
 
     //check if hit sth
     if (this.x < 0 || this.y < 0 || this.x + this.cell > canvas.width || this.y + this.cell > canvas.height)

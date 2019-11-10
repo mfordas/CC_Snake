@@ -8,31 +8,28 @@ export const cw = canvas.width;
 export const ch = canvas.height;
 
 let failed = false;
-export const snake = new Snake(50, 50);
+export let snake = new Snake(50, 50);
 export const fm = new FoodManager(24);
 
 
-const background = new Image();
+let background = new Image();
 background.src = "../src/walls/background.jpg";
 
-const walls = new Wall();
+let walls = new Wall();
 const itemsFirstRow = walls.addItemsToFirstRow();
 const itemsSecondRow = walls.addItemsToSecondRow();
 
 const gameLoop = () => {
   ctx.drawImage(background,0,0);
-  //ctx.fillStyle = 'white';
-  //ctx.fillRect(0, 0, cw, ch); //tło
   snake.move();
   snake.tailMove();
+  walls.drawWalls(itemsFirstRow, itemsSecondRow);
   fm.manageFood();
   snake.draw();
-  if (snake.onHit(/*walls*/)) {
+  if (snake.onHit(walls)) {
     gameOver(); 
     return; 
   };
-  walls.drawWalls(itemsFirstRow, itemsSecondRow);
-  
 
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
@@ -58,8 +55,13 @@ const gameOver = () => {
 const gameRestart = () => {
   failed = false;
   //restart obiektów
+  ctx.clearRect(0,0, cw, ch);
   snake = new Snake(50, 50);
-  wall = new Wall (cw /2, ch /2); //może być problem po zmianie cw
+  walls = new Wall ();
+  walls.addItemsToFirstRow();
+  walls.addItemsToSecondRow();
+  background = new Image();
+  background.src = "../src/walls/background.jpg";
   //restart petli gry
   requestAnimationFrame(gameLoop);
 }
@@ -80,5 +82,11 @@ document.addEventListener('keypress', ({ keyCode }) => {
 });
 
 console.log(itemsFirstRow[0]);
+console.log(itemsFirstRow[1]);
+
+console.log(itemsFirstRow[2]);
+
+console.log(itemsFirstRow[3]);
+
 
 requestAnimationFrame(gameLoop);

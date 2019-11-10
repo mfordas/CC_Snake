@@ -100,8 +100,6 @@ class Wall {
     ctx.fillText('E', 7*cw /12, 2.2*ch/2.5);
   }
 
-  
-
 }
 
 export default Wall;
