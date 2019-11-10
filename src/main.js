@@ -7,7 +7,7 @@ export const cw = canvas.width / 20;
 export const ch = canvas.height / 20;
 
 let snake = new Snake(50, 50);
-let wall = new Wall(cw / 2, ch / 2);
+let wall = new Wall(cw / 2, ch / 2); //może być problem po zmianie cw
 let failed = false;
 
 const gameLoop = () => {
@@ -17,7 +17,7 @@ const gameLoop = () => {
   snake.tailMove();
   snake.draw();
   wall.draw();
-  if (snake.onHit()) {
+  if (snake.onHit(/*walls*/)) {
     gameOver(); 
     return; 
   };
@@ -47,7 +47,7 @@ const gameRestart = () => {
   failed = false;
   //restart obiektów
   snake = new Snake(50, 50);
-  wall = new Wall (cw /2, ch /2);
+  wall = new Wall (cw /2, ch /2); //może być problem po zmianie cw
   //restart petli gry
   requestAnimationFrame(gameLoop);
 }

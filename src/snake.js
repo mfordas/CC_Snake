@@ -1,5 +1,6 @@
 import { ctx, cw, ch, canvas } from './main';
 import { runInThisContext } from 'vm';
+import Wall from './wall';
 
 class Snake {
   constructor(x, y) {
@@ -46,7 +47,17 @@ class Snake {
     }
   }
   
-  onHit() {
+  onHit(/*walls*/) {
+    
+    
+    //let w = walls.wallsFirstRow.concat(walls.wallsSecondRow);
+
+    //tmp code
+    let wa = new Wall();
+    wa.wallsFirstRow.push(new Wall(canvas.width/40,canvas.height/40));
+    let w = [];
+    w.push(wa.wallsFirstRow[0]);
+
     //check if hit sth
     if (this.x < 0 || this.y < 0 || this.x + this.cell > canvas.width || this.y + this.cell > canvas.height)
     {
@@ -82,8 +93,41 @@ class Snake {
         this.y + this.cell > this.tail[i].y && 
         this.y +this.cell < this.tail[i].y + this.cell) {
           return true;
-      }
+      }      
     } 
+
+    // //sciany
+    for (let i=0; i<w.length; i++) {
+      //lewy gorny rogW
+      if (this.x > w[i].x &&
+        this.x < w[i].x + w[i].length && 
+        this.y > w[i].y && 
+        this.y < w[i].y + w[i].height) {
+          return true;
+      }
+      //prawy gorny rog
+      else if (this.x + this.cell > w[i].x &&
+        this.x + this.cell < w[i].x + w[i].length && 
+        this.y > w[i].y && 
+        this.y < w[i].y + w[i].height) {
+          return true;
+      }
+      //lewy dolny rog
+      else if (this.x > w[i].x && 
+        this.x < w[i].x + w[i].length && 
+        this.y + this.cell > w[i].y && 
+        this.y + this.cell < w[i].y + w[i].height) {
+          return true;
+      }
+      //prawy dolny rog
+      else if (this.x + this.cell > w[i].x && 
+        this.x + this.cell < w[i].x + w[i].length && 
+        this.y + this.cell > w[i].y &&
+        this.y +this.cell < w[i].y + w[i].height) {
+          return true;
+      }      
+    } 
+    
     return false;
   }
 
