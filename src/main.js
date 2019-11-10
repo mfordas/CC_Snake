@@ -9,8 +9,8 @@ export const cw = canvas.width;
 export const ch = canvas.height;
 
 let failed = false;
-export let snake = new Snake(50, 50);
-export const fm = new FoodManager(24);
+let snake = new Snake(50, 50);
+let fm = new FoodManager(24, snake);
 
 
 let background = new Image();
@@ -33,7 +33,7 @@ const gameLoop = () => {
   if (snake.onHit(wallsRectObject, wallsCircleObject)) {
     gameOver(); 
     return; 
-  };
+  }
 
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
@@ -61,6 +61,7 @@ const gameRestart = () => {
   //restart obiektów
   ctx.clearRect(0,0, cw, ch);
   snake = new Snake(50, 50);
+  fm = new FoodManager(24, snake);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
   wallsCircleObject.addWallsCircle();
@@ -83,7 +84,7 @@ document.addEventListener('keypress', ({ keyCode }) => {
   // Spacja resetuje gre, jeżeli przegrana
   if (keyCode === 32) {
     if(failed) gameRestart();
-  };
+  }
    
 });
 

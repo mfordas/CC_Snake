@@ -1,4 +1,4 @@
-import { snake, canvas } from './main';
+import { canvas } from './main';
 import NormalFood from './foods/normalFood';
 import ComboFood from './foods/comboFood';
 import SuperFood from './foods/superFood';
@@ -7,20 +7,21 @@ import WeakeningFood from './foods/weakeningFood';
 //klasa zarządzająca jedzeniem
 
 class FoodManager {
-    constructor(foodSize) {
+    constructor(foodSize, snake) {
         this.foodOnMap = [];
         this.recentlyEaten = [new NormalFood(0, 0, 0), new NormalFood(0, 0, 0), new NormalFood(0, 0, 0)];
         this.maxFoodCount = 3;
         this.foodSize = foodSize;
         this.multiplier = 1;
+        this.snake = snake;
         this.refreshFood();
     }
 
     //sprawdza czy głowa dotarła do jedzenia
     headEat() {
         this.foodOnMap = this.foodOnMap.filter(food => {
-            if ((food.x + 10 <= snake.x + snake.cell && food.x + food.size - 10 >= snake.x) &&
-                (food.y + 10 <= snake.y + snake.cell && food.y + food.size - 10 >= snake.y)) {
+            if ((food.x + 10 <= this.snake.x + this.snake.cell && food.x + food.size - 10 >= this.snake.x) &&
+                (food.y + 10 <= this.snake.y + this.snake.cell && food.y + food.size - 10 >= this.snake.y)) {
 
                 this.recentlyEaten.shift();
                 this.recentlyEaten.push(food);
@@ -40,13 +41,13 @@ class FoodManager {
         let foodType = Math.floor(Math.random() * 100);
 
         if (foodType < 55) {
-            this.foodOnMap.push(new NormalFood(nextX, nextY, this.foodSize));
+            this.foodOnMap.push(new NormalFood(nextX, nextY, this.foodSize, this.snake, this));
         } else if (foodType < 90) {
-            this.foodOnMap.push(new ComboFood(nextX, nextY, this.foodSize));
+            this.foodOnMap.push(new ComboFood(nextX, nextY, this.foodSize, this.snake, this));
         } else if (foodType < 98) {
-            this.foodOnMap.push(new WeakeningFood(nextX, nextY, this.foodSize));
+            this.foodOnMap.push(new WeakeningFood(nextX, nextY, this.foodSize, this.snake, this));
         } else {
-            this.foodOnMap.push(new SuperFood(nextX, nextY, this.foodSize));
+            this.foodOnMap.push(new SuperFood(nextX, nextY, this.foodSize, this.snake, this));
         }
     }
 

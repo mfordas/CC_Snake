@@ -6,8 +6,9 @@ weakeningFoodImg.src = '/src/foods/img/rottenApple.png';
 //Osłabiające jedzenie - po zjedzeniu przez 10 sekund ruch jest nieregularny
 
 class WeakeningFood extends AbstractFood {
-    constructor(x, y, size) {
-        super(x, y, size);
+    constructor(x, y, size, snake, foodManager) {
+        super(x, y, size, snake, foodManager);
+
         this.img = weakeningFoodImg;
         this.name = 'Weakening Food';
     }
