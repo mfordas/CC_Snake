@@ -1,5 +1,6 @@
 import Snake from './snake';
 import Wall from './wall';
+import WallCircle from './walls/wallCircle';
 import FoodManager from './foodManager';
 
 export const canvas = document.querySelector('canvas');
@@ -15,18 +16,21 @@ export const fm = new FoodManager(24);
 let background = new Image();
 background.src = "../src/walls/background.jpg";
 
-let walls = new Wall();
-const itemsFirstRow = walls.addItemsToFirstRow();
-const itemsSecondRow = walls.addItemsToSecondRow();
+export let wallsCircleObject = new WallCircle();
+export let wallsRectObject = new Wall();
+
+const wallsCircle = wallsCircleObject.addWallsCircle();
+const wallsRect = wallsRectObject.addWallsRect();
 
 const gameLoop = () => {
   ctx.drawImage(background,0,0);
   snake.move();
   snake.tailMove();
-  walls.drawWalls(itemsFirstRow, itemsSecondRow);
+  wallsCircleObject.drawWalls(wallsCircle);
+  wallsRectObject.drawWalls(wallsRect);
   fm.manageFood();
   snake.draw();
-  if (snake.onHit(walls)) {
+  if (snake.onHit(wallsRectObject, wallsCircleObject)) {
     gameOver(); 
     return; 
   };
@@ -57,9 +61,10 @@ const gameRestart = () => {
   //restart obiektów
   ctx.clearRect(0,0, cw, ch);
   snake = new Snake(50, 50);
-  walls = new Wall ();
-  walls.addItemsToFirstRow();
-  walls.addItemsToSecondRow();
+  wallsCircleObject = new WallCircle();
+  wallsRectObject = new Wall();
+  wallsCircleObject.addWallsCircle();
+  wallsRectObject.addWallsRect();
   background = new Image();
   background.src = "../src/walls/background.jpg";
   //restart petli gry
@@ -78,15 +83,8 @@ document.addEventListener('keypress', ({ keyCode }) => {
   // Spacja resetuje gre, jeżeli przegrana
   if (keyCode === 32) {
     if(failed) gameRestart();
-  }  
+  };
+   
 });
-
-console.log(itemsFirstRow[0]);
-console.log(itemsFirstRow[1]);
-
-console.log(itemsFirstRow[2]);
-
-console.log(itemsFirstRow[3]);
-
 
 requestAnimationFrame(gameLoop);

@@ -1,6 +1,7 @@
 import { ctx, cw, ch, canvas } from './main';
 import { runInThisContext } from 'vm';
 import Wall from './wall';
+import WallCircle from './walls/wallCircle';
 
 class Snake {
   constructor(x, y) {
@@ -47,16 +48,10 @@ class Snake {
     }
   }
   
-  onHit(walls) {
+  onHit(wallsRectObject, wallsCircleObject) {
     
     
-    let w = walls.wallsFirstRow.concat(walls.wallsSecondRow);
-
-    //tmp code
-    //let wa = new Wall();
-    //wa.wallsFirstRow.push(new Wall(canvas.width/40,canvas.height/40));
-    //let w = [];
-    //w.push(wa.wallsFirstRow[0]);
+    let w = wallsCircleObject.wallsCircle.concat(wallsRectObject.wallsRect);
 
     //check if hit sth
     if (this.x < 0 || this.y < 0 || this.x + this.cell > canvas.width || this.y + this.cell > canvas.height)
@@ -66,7 +61,7 @@ class Snake {
     //minimalna liczba czesci weza przy ktorej moze sie ugryzc
     let minPartsNumber = Math.ceil((3*this.cell)/this.speed);
     for (let i=0; i<this.tailLength - minPartsNumber; i++) {
-      //lewy gorny rogW
+      //lewy gorny rog
       if (this.x > this.tail[i].x && 
         this.x < this.tail[i].x + this.cell && 
         this.y > this.tail[i].y && 
@@ -98,7 +93,8 @@ class Snake {
 
     // //sciany
     for (let i=0; i<w.length; i++) {
-      //lewy gorny rogW
+      if (w[i].type === 'rect'){
+        //lewy gorny rog
       if (this.x > w[i].x &&
         this.x < w[i].x + w[i].length && 
         this.y > w[i].y && 
@@ -125,7 +121,69 @@ class Snake {
         this.y + this.cell > w[i].y &&
         this.y +this.cell < w[i].y + w[i].height) {
           return true;
-      }      
+      }
+    } else {
+      //lewy gorny rog
+      if (this.x > w[i].x &&
+        this.x < w[i].x + w[i].radius && 
+        this.y > w[i].y && 
+        this.y < w[i].y + w[i].radius) {
+          return true;
+      }
+
+      //prawy gorny rog
+      else if (this.x + this.cell < w[i].x &&
+        this.x + this.cell > w[i].x - w[i].radius && 
+        this.y > w[i].y && 
+        this.y < w[i].y + w[i].radius) {
+          return true;
+      }
+      //lewy dolny rog
+      else if (this.x > w[i].x && 
+        this.x < w[i].x + w[i].radius && 
+        this.y + this.cell < w[i].y && 
+        this.y + this.cell > w[i].y - w[i].radius) {
+          return true;
+      }
+      // //prawy dolny rog
+      else if (this.x + this.cell <= w[i].x && 
+        this.x + this.cell > w[i].x - w[i].radius && 
+        this.y + this.cell < w[i].y &&
+        this.y +this.cell > w[i].y - w[i].radius) {
+          return true;
+      }
+
+      // środek góra
+      else if (this.x + this.cell/2 > w[i].x &&
+        this.x + this.cell/2 < w[i].x + w[i].radius && 
+        this.y > w[i].y && 
+        this.y < w[i].y + w[i].radius) {
+          return true;
+      }
+
+      // środek prawa strona
+      else if (this.x + this.cell < w[i].x &&
+        this.x + this.cell > w[i].x - w[i].radius && 
+        this.y + this.cell/2 > w[i].y && 
+        this.y + this.cell/2< w[i].y + w[i].radius) {
+          return true;
+      }
+      // środek lewa strona
+      else if (this.x > w[i].x && 
+        this.x < w[i].x + w[i].radius && 
+        this.y + this.cell/2 < w[i].y && 
+        this.y + this.cell/2 > w[i].y - w[i].radius) {
+          return true;
+      }
+      // środek dół
+      else if (this.x + this.cell/2 <= w[i].x && 
+        this.x + this.cell/2 > w[i].x - w[i].radius && 
+        this.y + this.cell < w[i].y &&
+        this.y +this.cell > w[i].y - w[i].radius) {
+          return true;
+      }
+
+    }      
     } 
     
     return false;
