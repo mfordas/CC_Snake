@@ -3,8 +3,8 @@ import Wall from './wall';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
-export const cw = canvas.width / 20;
-export const ch = canvas.height / 20;
+export const cw = canvas.width;
+export const ch = canvas.height;
 
 const snake = new Snake(50, 50);
 
