@@ -81,7 +81,7 @@ document.addEventListener('keypress', ({ keyCode }) => {
   if (keyCode === 87 || (keyCode == 119 && snake.direction != 'DOWN')) snake.setDirection('UP');
   if (keyCode === 83 || (keyCode == 115 && snake.direction != 'UP')) snake.setDirection('DOWN');
   //Klawisz "K" do wydłużania węża
-  if (keyCode === 107) snake.expandSnake();
+  //if (keyCode === 107) snake.expandSnake();
   // Spacja resetuje gre, jeżeli przegrana
   if (keyCode === 32) {
     if(failed) gameRestart();

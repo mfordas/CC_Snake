@@ -27,11 +27,6 @@ class Snake {
   draw() {
     for (let i = 0; i < this.tail.length-1; i++) {
       ctx.drawImage(tailIMG, this.tail[i].x , this.tail[i].y, this.cell * imgSize, this.cell * imgSize);
-      // ctx.fillStyle = "red";
-      // ctx.fillRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
-
-      // ctx.strokeStyle = 'white';
-      // ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
     }
 
     if (this.direction === 'LEFT') {
