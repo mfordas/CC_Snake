@@ -57,22 +57,24 @@ canvas {
 
 .logo {
     width: 214px;
-    height: 214px;
+    height: 182px;
     position: absolute;
     right: 10px;
     background-color: green;
     border: inset 10px var(--frame-color);
     box-sizing: border-box;
+    z-index: 1;
+    background-image: url('logo.png');
+    background-size: 194px 162px;
 }
 
-.score {
+.game-data {
     width: 214px;
-    height: 100px;
+    height: 144px;
     position: absolute;
-    top: 234px;
+    top: 169px;
     right: 10px;
     background-color: rgb(20, 20, 20);
-    box-sizing: border-box;
 }
 
 .food-description {
@@ -86,18 +88,35 @@ canvas {
     box-sizing: border-box;
 }
 
-#points {
+#player-name {
     position: absolute;
-    top: -24px;
+    top: 0px;
     width: 214px;
     padding-left: 10px;
     border: inset 10px var(--frame-color);
     box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#name {
+    max-width: 20px;
+    color: green;
+}
+
+#score {
+    position: absolute;
+    top: 41px;
+    width: 214px;
+    padding-left: 10px;
+    border: inset 10px var(--frame-color);
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 #multiplier {
     position: absolute;
-    top: 17px;
+    top: 82px;
     width: 214px;
     padding-left: 10px;
     border: inset 10px var(--frame-color);

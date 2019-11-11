@@ -30,7 +30,7 @@ class AbstractFood {
     async doubleMultiplier() {
         this.foodManager.multiplier *= 2;
         console.log(this.foodManager.multiplier);
-        await sleep(20000);
+        await sleep(10000);
         this.foodManager.multiplier /= 2;
     }
 
