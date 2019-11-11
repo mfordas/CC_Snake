@@ -5,19 +5,18 @@ import FoodManager from './foodManager';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
-export const cw = canvas.width;
+export const cw = canvas.width - 239;
 export const ch = canvas.height;
 
 let failed = false;
-export let snake = new Snake(50, 50);
-export const fm = new FoodManager(24);
-
+let snake = new Snake(50, 50);
 
 let background = new Image();
 background.src = "../src/walls/background.jpg";
 
 export let wallsCircleObject = new WallCircle();
 export let wallsRectObject = new Wall();
+let fm = new FoodManager(24, snake, wallsRectObject.wallsRect, wallsCircleObject.wallsCircle);
 
 const wallsCircle = wallsCircleObject.addWallsCircle();
 const wallsRect = wallsRectObject.addWallsRect();
@@ -33,7 +32,8 @@ const gameLoop = () => {
   if (snake.onHit(wallsRectObject, wallsCircleObject)) {
     gameOver(); 
     return; 
-  };
+  }
+  navbarDataUpdate();
 
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
@@ -45,12 +45,12 @@ const gameOver = () => {
   ctx.font = 50 + "px Arial";
   let textGameOVer = "Game Over";
   let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, canvas.width/2 - textGameOverSize.width/2 , canvas.height/2);
+  ctx.fillText(textGameOVer, cw/2 - textGameOverSize.width/2 , ch/2);
   //Press Space to restart
   ctx.font = "20px Arial";
   let textPressSpace = "Press Space to restart";
   let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, canvas.width/2 - textPressSpaceSize.width/2 , canvas.height/2 + fontHeight/1.5);
+  ctx.fillText(textPressSpace, cw/2 - textPressSpaceSize.width/2 ,ch/2 + fontHeight/1.5);
   
   failed = true;
 }
@@ -61,6 +61,7 @@ const gameRestart = () => {
   //restart obiektów
   ctx.clearRect(0,0, cw, ch);
   snake = new Snake(50, 50);
+  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
   wallsCircleObject.addWallsCircle();
@@ -83,8 +84,14 @@ document.addEventListener('keypress', ({ keyCode }) => {
   // Spacja resetuje gre, jeżeli przegrana
   if (keyCode === 32) {
     if(failed) gameRestart();
-  };
+  }
    
 });
+
+function navbarDataUpdate() {
+  document.getElementById('name').innerHTML =  `name`;
+  document.getElementById('score').innerHTML =  `Score: ${snake.tailLength}`;
+  document.getElementById('multiplier').innerHTML =  `Multiplier: ${fm.multiplier}`;
+}
 
 requestAnimationFrame(gameLoop);

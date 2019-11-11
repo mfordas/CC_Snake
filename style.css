@@ -1,3 +1,12 @@
+:root {
+    --frame-color: rgb(58, 58, 58);
+}
+
+@font-face {
+    font-family: "Visitor";
+    src: url("visitor.ttf");
+}
+
 body {
     /*background-color: antiquewhite;*/
     background: rgb(31,31,31);
@@ -6,8 +15,122 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    font-family: "Visitor";
+    font-size: 24px;
+    color: white;
 }
   
+h1 {
+    margin: 0;
+    text-align: center;
+}
+
+img {
+    transform: scale(0.25);
+    position: absolute;
+}
+
+#canvas-wrapper {
+    position: relative;
+}
+
 canvas {
     border: black solid 5px;
+}
+
+.scoreboard-wrapper {
+    border-left: black solid 5px;
+    width: 234px;
+    height: 701px;
+    top: 4px;
+    right: 5px;
+    position: absolute;
+}
+
+.scoreboard {
+    width: 234px;
+    height: 702px;
+    background-color: rgb(78, 78, 78);
+    border: outset 10px var(--frame-color);
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 214px;
+    height: 182px;
+    position: absolute;
+    right: 10px;
+    background-color: green;
+    border: inset 10px var(--frame-color);
+    box-sizing: border-box;
+    z-index: 1;
+    background-image: url('logo.png');
+    background-size: 194px 162px;
+}
+
+.game-data {
+    width: 214px;
+    height: 144px;
+    position: absolute;
+    top: 169px;
+    right: 10px;
+    background-color: rgb(20, 20, 20);
+}
+
+.food-description {
+    width: 214px;
+    height: 376px;
+    position: absolute;
+    top: 316px;
+    right: 10px;
+    background-color: rgb(44, 61, 39);
+    border: inset 10px var(--frame-color);
+    box-sizing: border-box;
+}
+
+#player-name {
+    position: absolute;
+    top: 0px;
+    width: 214px;
+    padding-left: 10px;
+    border: inset 10px var(--frame-color);
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#name {
+    max-width: 20px;
+    color: green;
+}
+
+#score {
+    position: absolute;
+    top: 41px;
+    width: 214px;
+    padding-left: 10px;
+    border: inset 10px var(--frame-color);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#multiplier {
+    position: absolute;
+    top: 82px;
+    width: 214px;
+    padding-left: 10px;
+    border: inset 10px var(--frame-color);
+    box-sizing: border-box;
+}
+
+.food-des {
+    margin: 0 3px 8px 52px;
+    font-size: 16px;
+    text-align: left;
+    position: relative;
+}
+
+.food-des img{
+    top: -36px;
+    left: -90px;
 }

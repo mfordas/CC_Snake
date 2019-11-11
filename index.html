@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Snake</title>
-  </head>
 
-  <body>
-    <div id="wrapper">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Snake</title>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="canvas-wrapper">
       <canvas width="1200" height="700"></canvas>
+      <div class="scoreboard-wrapper">
+        <div class="scoreboard">
+          <div class="logo"></div>
+          <div class="game-data">
+            <p id="player-name">Player: <span id="name"></span></p>
+            <p id="score"></p>
+            <p id="multiplier"></p>
+          </div>
+          <div class="food-description">
+            <h1>FOOD</h1>
+            <p class="food-des red">
+              <img src="src\foods\img\redApple.png" alt="Red Apple">
+              <br> adds one point as any other apple
+            </p>
+            <p class="food-des green">
+              <img src="src\foods\img\greenApple.png" alt="Green Apple">
+              <br> eat 3 in a row to double multiplier for 10 s
+            </p>
+            <p class="food-des rotten">
+              <img src="src\foods\img\rottenApple.png" alt="Rotten Apple">
+              <br> modifies snake's move for 10 s
+            </p>
+            <p class="food-des golden">
+              <img src="src\foods\img\goldenApple.png" alt="Golden Apple">
+              <br> increases food count on map by 1
+            </p>
+            <p class="food-des pink">
+              <img src="src\foods\img\pinkApple.png" alt="Pink Apple">
+              <br> cuts snake and points in half
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <script defer src="index.js"></script>
+</body>
 
-    <script defer src="index.js"></script>
-  </body>
 </html>

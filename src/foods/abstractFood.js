@@ -1,11 +1,12 @@
-import {ctx, snake} from '../main';
-import { fm } from '../main';
+import { ctx } from '../main';
 
 class AbstractFood {
-    constructor (x, y, size){
+    constructor(x, y, size, snake, foodManager) {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.snake = snake;
+        this.foodManager = foodManager;
         this.toRemove = 0;
     }
 
@@ -20,26 +21,39 @@ class AbstractFood {
         this.eatFood();
 
         for (var i = 0; i < multiplier; i++) {
-            snake.expandSnake();
+            this.snake.expandSnake();
             await sleep(150);
         }
     }
 
     // Podwojenie mnożnika punktów
     async doubleMultiplier() {
-        fm.multiplier *= 2;
-        console.log(fm.multiplier);
+        this.foodManager.multiplier *= 2;
+        console.log(this.foodManager.multiplier);
         await sleep(10000);
-        fm.multiplier /= 2;
+        this.foodManager.multiplier /= 2;
     }
 
     // Nieregularny ruch węża
     async irregularMove() {
         for (var i = 0; i < 20; i++) {
-            snake.speed *= 1.75;
+            this.snake.speed *= 2;
             await sleep(250);
-            snake.speed /= 1.75;
+            this.snake.speed /= 2;
             await sleep(250);
+        }
+    }
+
+    splitSnake() {
+        let toDelete;
+        if (this.snake.tailLength === 1)
+            toDelete = 0;
+        else {
+            toDelete = this.snake.tailLength / 2;
+        }
+        for (var i = 0; i < toDelete; i++) {
+            this.snake.tail.shift();
+            this.snake.tailLength--;
         }
     }
 }

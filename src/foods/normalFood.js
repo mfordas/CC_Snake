@@ -6,13 +6,13 @@ normalFoodImg.src = '/src/foods/img/redApple.png';
 // Normalne jedzenie - dodaje 1 do długości węża
 
 class NormalFood extends AbstractFood{
-    constructor (x, y, size){
-        super(x, y, size);
+    constructor (x, y, size, snake, foodManager){
+        super(x, y, size, snake, foodManager);
         this.img = normalFoodImg;
         this.name = 'Normal Food';
     }
 
-    eatFood() {};
+    eatFood() {}
     
 }
 
