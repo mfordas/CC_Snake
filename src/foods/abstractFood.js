@@ -1,7 +1,7 @@
-import {ctx} from '../main';
+import { ctx } from '../main';
 
 class AbstractFood {
-    constructor (x, y, size, snake, foodManager){
+    constructor(x, y, size, snake, foodManager) {
         this.x = x;
         this.y = y;
         this.size = size;
@@ -37,10 +37,23 @@ class AbstractFood {
     // Nieregularny ruch węża
     async irregularMove() {
         for (var i = 0; i < 20; i++) {
-            this.snake.speed *= 1.75;
+            this.snake.speed *= 2;
             await sleep(250);
-            this.snake.speed /= 1.75;
+            this.snake.speed /= 2;
             await sleep(250);
+        }
+    }
+
+    splitSnake() {
+        let toDelete;
+        if (this.snake.tailLength === 1)
+            toDelete = 0;
+        else {
+            toDelete = this.snake.tailLength / 2;
+        }
+        for (var i = 0; i < toDelete; i++) {
+            this.snake.tail.shift();
+            this.snake.tailLength--;
         }
     }
 }

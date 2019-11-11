@@ -54,7 +54,7 @@ class Snake {
     let w = wallsCircleObject.wallsCircle.concat(wallsRectObject.wallsRect);
 
     //check if hit sth
-    if (this.x < 0 || this.y < 0 || this.x + this.cell > canvas.width || this.y + this.cell > canvas.height)
+    if (this.x < 0 || this.y < 0 || this.x + this.cell > cw || this.y + this.cell > ch)
     {
       return true;
     }

@@ -1,8 +1,9 @@
-import { canvas } from './main';
+import { cw, ch } from './main';
 import NormalFood from './foods/normalFood';
 import ComboFood from './foods/comboFood';
 import SuperFood from './foods/superFood';
 import WeakeningFood from './foods/weakeningFood';
+import SplitFood from './foods/splitFood';
 
 //klasa zarządzająca jedzeniem
 
@@ -20,8 +21,8 @@ class FoodManager {
     //sprawdza czy głowa dotarła do jedzenia
     headEat() {
         this.foodOnMap = this.foodOnMap.filter(food => {
-            if ((food.x + 10 <= this.snake.x + this.snake.cell && food.x + food.size - 10 >= this.snake.x) &&
-                (food.y + 10 <= this.snake.y + this.snake.cell && food.y + food.size - 10 >= this.snake.y)) {
+            if ((food.x + 6 <= this.snake.x + this.snake.cell && food.x + food.size - 6 >= this.snake.x) &&
+                (food.y + 6 <= this.snake.y + this.snake.cell && food.y + food.size - 6 >= this.snake.y)) {
 
                 this.recentlyEaten.shift();
                 this.recentlyEaten.push(food);
@@ -36,18 +37,26 @@ class FoodManager {
 
     //umiejscawia jedzenie na planszy
     placeApple() {
-        let nextX = Math.floor(Math.random() * (canvas.width - this.foodSize));
-        let nextY = Math.floor(Math.random() * (canvas.height - this.foodSize));
+        let nextX;
+        let nextY;
+
+        do {
+            nextX = Math.floor(Math.random() * (cw - this.foodSize));
+            nextY = Math.floor(Math.random() * (ch - this.foodSize));
+        } while(false);
+
         let foodType = Math.floor(Math.random() * 100);
 
-        if (foodType < 55) {
+        if (foodType < 42) {
             this.foodOnMap.push(new NormalFood(nextX, nextY, this.foodSize, this.snake, this));
-        } else if (foodType < 90) {
+        } else if (foodType < 84) {
             this.foodOnMap.push(new ComboFood(nextX, nextY, this.foodSize, this.snake, this));
-        } else if (foodType < 98) {
+        } else if (foodType < 94) {
             this.foodOnMap.push(new WeakeningFood(nextX, nextY, this.foodSize, this.snake, this));
-        } else {
+        } else if (foodType < 97) {
             this.foodOnMap.push(new SuperFood(nextX, nextY, this.foodSize, this.snake, this));
+        } else {
+            this.foodOnMap.push(new SplitFood(nextX, nextY, this.foodSize, this.snake, this));
         }
     }
 
@@ -67,8 +76,8 @@ class FoodManager {
     //usuwa najstarsze jedzenie na planszy w przedziale 5-10 sekund
     async refreshFood() {
         this.foodOnMap.splice(0, 1);
-        let timeout = Math.floor(Math.random() * 5000);
-        await sleep(5000 + timeout);
+        let timeout = Math.floor(Math.random() * 10000);
+        await sleep(7500 + timeout);
         this.refreshFood();
     }
 
