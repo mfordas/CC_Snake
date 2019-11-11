@@ -1,6 +1,17 @@
-import { ctx, cw, ch, canvas } from './main';
-import { runInThisContext } from 'vm';
-import Wall from './wall';
+import { ctx, cw, ch } from './main';
+
+const headIMGLeft = new Image();
+headIMGLeft.src = '/src/snake-img/head-left.png';
+const headIMGRight = new Image();
+headIMGRight.src = '/src/snake-img/head-right.png';
+const headIMGUp = new Image();
+headIMGUp.src = '/src/snake-img/head-up.png';
+const headIMGDown = new Image();
+headIMGDown.src = '/src/snake-img/head-down.png';
+const tailIMG = new Image();
+tailIMG.src = '/src/snake-img/tail.png';
+
+const imgSize = 1.2;
 
 class Snake {
   constructor(x, y) {
@@ -14,14 +25,20 @@ class Snake {
   }
 
   draw() {
-    //ctx.fillStyle = 'green';
-    ctx.fillRect(this.x, this.y, this.cell, this.cell);
-    for (let i = 0; i < this.tail.length; i++) {
-      ctx.fillStyle = (i== this.tail.length - 1)? 'green' : "red";
-      ctx.fillRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
+    for (let i = 0; i < this.tail.length-1; i++) {
+      ctx.drawImage(tailIMG, this.tail[i].x , this.tail[i].y, this.cell * imgSize, this.cell * imgSize);
+    }
 
-      ctx.strokeStyle = 'white';
-      ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
+    if (this.direction === 'LEFT') {
+      ctx.drawImage(headIMGLeft, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else if (this.direction === 'RIGHT') {
+      ctx.drawImage(headIMGRight, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else if (this.direction === 'UP') {
+      ctx.drawImage(headIMGUp, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else if (this.direction === 'DOWN') {
+      ctx.drawImage(headIMGDown, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else {
+      ctx.drawImage(headIMGRight, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
     }
   }
   setDirection(direction) {
@@ -47,26 +64,20 @@ class Snake {
     }
   }
   
-  onHit(/*walls*/) {
+  onHit(wallsRectObject, wallsCircleObject) {
     
     
-    //let w = walls.wallsFirstRow.concat(walls.wallsSecondRow);
-
-    //tmp code
-    let wa = new Wall();
-    wa.wallsFirstRow.push(new Wall(canvas.width/40,canvas.height/40));
-    let w = [];
-    w.push(wa.wallsFirstRow[0]);
+    let w = wallsCircleObject.wallsCircle.concat(wallsRectObject.wallsRect);
 
     //check if hit sth
-    if (this.x < 0 || this.y < 0 || this.x + this.cell > canvas.width || this.y + this.cell > canvas.height)
+    if (this.x < 0 || this.y < 0 || this.x + this.cell > cw || this.y + this.cell > ch)
     {
       return true;
     }
     //minimalna liczba czesci weza przy ktorej moze sie ugryzc
     let minPartsNumber = Math.ceil((3*this.cell)/this.speed);
     for (let i=0; i<this.tailLength - minPartsNumber; i++) {
-      //lewy gorny rogW
+      //lewy gorny rog
       if (this.x > this.tail[i].x && 
         this.x < this.tail[i].x + this.cell && 
         this.y > this.tail[i].y && 
@@ -98,7 +109,8 @@ class Snake {
 
     // //sciany
     for (let i=0; i<w.length; i++) {
-      //lewy gorny rogW
+      if (w[i].type === 'rect'){
+        //lewy gorny rog
       if (this.x > w[i].x &&
         this.x < w[i].x + w[i].length && 
         this.y > w[i].y && 
@@ -125,7 +137,59 @@ class Snake {
         this.y + this.cell > w[i].y &&
         this.y +this.cell < w[i].y + w[i].height) {
           return true;
-      }      
+      }
+    } else {
+      let cicrleEquationResult;
+
+      //lewy gorny rog
+      cicrleEquationResult = (this.x - w[i].x)**2 + (this.y - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //prawy gorny rog
+      cicrleEquationResult = (this.x + this.cell - w[i].x)**2 + (this.y - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+      
+      //lewy dolny rog
+      cicrleEquationResult = (this.x - w[i].x)**2 + (this.y + this.cell - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //prawy gorny rog
+      cicrleEquationResult = (this.x + this.cell - w[i].x)**2 + (this.y + this.cell - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //srodek gora
+      cicrleEquationResult = (this.x + this.cell/2 - w[i].x)**2 + (this.y - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //srodek dol
+      cicrleEquationResult = (this.x + this.cell/2 - w[i].x)**2 + (this.y +this.cell - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //srodek prawy
+      cicrleEquationResult = (this.x + this.cell - w[i].x)**2 + (this.y + this.cell/2 - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //srodek lewy
+      cicrleEquationResult = (this.x - w[i].x)**2 + (this.y + this.cell/2 - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+    }      
     } 
     
     return false;
