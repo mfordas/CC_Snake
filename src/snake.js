@@ -1,7 +1,4 @@
-import { ctx, cw, ch, canvas } from './main';
-import { runInThisContext } from 'vm';
-import Wall from './wall';
-import WallCircle from './walls/wallCircle';
+import { ctx, cw, ch } from './main';
 
 class Snake {
   constructor(x, y) {
@@ -54,7 +51,7 @@ class Snake {
     let w = wallsCircleObject.wallsCircle.concat(wallsRectObject.wallsRect);
 
     //check if hit sth
-    if (this.x < 0 || this.y < 0 || this.x + this.cell > canvas.width || this.y + this.cell > canvas.height)
+    if (this.x < 0 || this.y < 0 || this.x + this.cell > cw || this.y + this.cell > ch)
     {
       return true;
     }
@@ -123,64 +120,54 @@ class Snake {
           return true;
       }
     } else {
+      let cicrleEquationResult;
+
       //lewy gorny rog
-      if (this.x > w[i].x &&
-        this.x < w[i].x + w[i].radius && 
-        this.y > w[i].y && 
-        this.y < w[i].y + w[i].radius) {
-          return true;
+      cicrleEquationResult = (this.x - w[i].x)**2 + (this.y - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
 
       //prawy gorny rog
-      else if (this.x + this.cell < w[i].x &&
-        this.x + this.cell > w[i].x - w[i].radius && 
-        this.y > w[i].y && 
-        this.y < w[i].y + w[i].radius) {
-          return true;
+      cicrleEquationResult = (this.x + this.cell - w[i].x)**2 + (this.y - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
+      
       //lewy dolny rog
-      else if (this.x > w[i].x && 
-        this.x < w[i].x + w[i].radius && 
-        this.y + this.cell < w[i].y && 
-        this.y + this.cell > w[i].y - w[i].radius) {
-          return true;
-      }
-      // //prawy dolny rog
-      else if (this.x + this.cell <= w[i].x && 
-        this.x + this.cell > w[i].x - w[i].radius && 
-        this.y + this.cell < w[i].y &&
-        this.y +this.cell > w[i].y - w[i].radius) {
-          return true;
+      cicrleEquationResult = (this.x - w[i].x)**2 + (this.y + this.cell - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
 
-      // środek góra
-      else if (this.x + this.cell/2 > w[i].x &&
-        this.x + this.cell/2 < w[i].x + w[i].radius && 
-        this.y > w[i].y && 
-        this.y < w[i].y + w[i].radius) {
-          return true;
+      //prawy gorny rog
+      cicrleEquationResult = (this.x + this.cell - w[i].x)**2 + (this.y + this.cell - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
 
-      // środek prawa strona
-      else if (this.x + this.cell < w[i].x &&
-        this.x + this.cell > w[i].x - w[i].radius && 
-        this.y + this.cell/2 > w[i].y && 
-        this.y + this.cell/2< w[i].y + w[i].radius) {
-          return true;
+      //srodek gora
+      cicrleEquationResult = (this.x + this.cell/2 - w[i].x)**2 + (this.y - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
-      // środek lewa strona
-      else if (this.x > w[i].x && 
-        this.x < w[i].x + w[i].radius && 
-        this.y + this.cell/2 < w[i].y && 
-        this.y + this.cell/2 > w[i].y - w[i].radius) {
-          return true;
+
+      //srodek dol
+      cicrleEquationResult = (this.x + this.cell/2 - w[i].x)**2 + (this.y +this.cell - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
-      // środek dół
-      else if (this.x + this.cell/2 <= w[i].x && 
-        this.x + this.cell/2 > w[i].x - w[i].radius && 
-        this.y + this.cell < w[i].y &&
-        this.y +this.cell > w[i].y - w[i].radius) {
-          return true;
+
+      //srodek prawy
+      cicrleEquationResult = (this.x + this.cell - w[i].x)**2 + (this.y + this.cell/2 - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
+      }
+
+      //srodek lewy
+      cicrleEquationResult = (this.x - w[i].x)**2 + (this.y + this.cell/2 - w[i].y)**2;
+      if (cicrleEquationResult <= w[i].radius**2) {
+        return true;
       }
 
     }      
