@@ -1,4 +1,4 @@
-import { cw, ch } from './main';
+import { cw, ch} from './main';
 import NormalFood from './foods/normalFood';
 import ComboFood from './foods/comboFood';
 import SuperFood from './foods/superFood';
@@ -8,13 +8,15 @@ import SplitFood from './foods/splitFood';
 //klasa zarządzająca jedzeniem
 
 class FoodManager {
-    constructor(foodSize, snake) {
+    constructor(foodSize, snake, wallsRect, wallsCircle) {
         this.foodOnMap = [];
         this.recentlyEaten = [new NormalFood(0, 0, 0), new NormalFood(0, 0, 0), new NormalFood(0, 0, 0)];
         this.maxFoodCount = 3;
         this.foodSize = foodSize;
         this.multiplier = 1;
         this.snake = snake;
+        this.wallsRect = wallsRect;
+        this.wallsCircle = wallsCircle;
         this.refreshFood();
     }
 
@@ -43,7 +45,14 @@ class FoodManager {
         do {
             nextX = Math.floor(Math.random() * (cw - this.foodSize));
             nextY = Math.floor(Math.random() * (ch - this.foodSize));
-        } while(false);
+            if (this.wallsRect.some(wall => nextX > wall.x && nextX < wall.x + wall.length && nextY > wall.y && nextY < wall.y + wall.height))
+                console.log('CHUJ');
+
+            if (this.wallsCircle.some(wall => nextX + this.foodSize > wall.x - wall.radius && nextX < wall.x + wall.radius && nextY + this.foodSize > wall.y - wall.radius && nextY < wall.y + wall.radius))
+            console.log('DUPA');
+        } while (
+            (this.wallsRect.some(wall => nextX + this.foodSize > wall.x && nextX < wall.x + wall.length && nextY + this.foodSize > wall.y && nextY < wall.y + wall.height)) ||
+            (this.wallsCircle.some(wall => nextX + this.foodSize > wall.x - wall.radius && nextX < wall.x + wall.radius && nextY + this.foodSize > wall.y - wall.radius && nextY < wall.y + wall.radius)));
 
         let foodType = Math.floor(Math.random() * 100);
 
@@ -62,7 +71,7 @@ class FoodManager {
 
     //sprawdza czy na planszy brakuje jedzenia
     foodGenerator() {
-        if (this.foodOnMap.length < this.maxFoodCount) 
+        if (this.foodOnMap.length < this.maxFoodCount)
             this.placeApple();
     }
 

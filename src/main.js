@@ -10,14 +10,13 @@ export const ch = canvas.height;
 
 let failed = false;
 let snake = new Snake(50, 50);
-let fm = new FoodManager(24, snake);
-
 
 let background = new Image();
 background.src = "../src/walls/background.jpg";
 
 export let wallsCircleObject = new WallCircle();
 export let wallsRectObject = new Wall();
+let fm = new FoodManager(24, snake, wallsRectObject.wallsRect, wallsCircleObject.wallsCircle);
 
 const wallsCircle = wallsCircleObject.addWallsCircle();
 const wallsRect = wallsRectObject.addWallsRect();
@@ -62,7 +61,7 @@ const gameRestart = () => {
   //restart obiektów
   ctx.clearRect(0,0, cw, ch);
   snake = new Snake(50, 50);
-  fm = new FoodManager(24, snake);
+  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
   wallsCircleObject.addWallsCircle();
@@ -90,7 +89,8 @@ document.addEventListener('keypress', ({ keyCode }) => {
 });
 
 function navbarDataUpdate() {
-  document.getElementById('points').innerHTML =  `Score: ${snake.tailLength}`;
+  document.getElementById('name').innerHTML =  `name`;
+  document.getElementById('score').innerHTML =  `Score: ${snake.tailLength}`;
   document.getElementById('multiplier').innerHTML =  `Multiplier: ${fm.multiplier}`;
 }
 
