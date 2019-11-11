@@ -1,5 +1,18 @@
 import { ctx, cw, ch } from './main';
 
+const headIMGLeft = new Image();
+headIMGLeft.src = '/src/snake-img/head-left.png';
+const headIMGRight = new Image();
+headIMGRight.src = '/src/snake-img/head-right.png';
+const headIMGUp = new Image();
+headIMGUp.src = '/src/snake-img/head-up.png';
+const headIMGDown = new Image();
+headIMGDown.src = '/src/snake-img/head-down.png';
+const tailIMG = new Image();
+tailIMG.src = '/src/snake-img/tail.png';
+
+const imgSize = 1.2;
+
 class Snake {
   constructor(x, y) {
     this.x = x;
@@ -12,14 +25,25 @@ class Snake {
   }
 
   draw() {
-    //ctx.fillStyle = 'green';
-    ctx.fillRect(this.x, this.y, this.cell, this.cell);
-    for (let i = 0; i < this.tail.length; i++) {
-      ctx.fillStyle = (i== this.tail.length - 1)? 'green' : "red";
-      ctx.fillRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
+    for (let i = 0; i < this.tail.length-1; i++) {
+      ctx.drawImage(tailIMG, this.tail[i].x , this.tail[i].y, this.cell * imgSize, this.cell * imgSize);
+      // ctx.fillStyle = "red";
+      // ctx.fillRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
 
-      ctx.strokeStyle = 'white';
-      ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
+      // ctx.strokeStyle = 'white';
+      // ctx.strokeRect(this.tail[i].x, this.tail[i].y, this.cell, this.cell);
+    }
+
+    if (this.direction === 'LEFT') {
+      ctx.drawImage(headIMGLeft, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else if (this.direction === 'RIGHT') {
+      ctx.drawImage(headIMGRight, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else if (this.direction === 'UP') {
+      ctx.drawImage(headIMGUp, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else if (this.direction === 'DOWN') {
+      ctx.drawImage(headIMGDown, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
+    } else {
+      ctx.drawImage(headIMGRight, this.tail[this.tail.length-1].x, this.tail[this.tail.length-1].y, this.cell*imgSize, this.cell*imgSize);
     }
   }
   setDirection(direction) {
