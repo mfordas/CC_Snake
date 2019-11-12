@@ -26,7 +26,27 @@ let wallsCircle = wallsCircleObject.addWallsCircle();
 
 let fm = new FoodManager(24, snake, wallsRectObject.wallsRect, wallsCircleObject.wallsCircle);
 
+//menu glowne
+let showMenu = true;
+let bgImage = new Image();
+let logoImage = new Image();
+let playImage = new Image();
+let creditsImage = new Image();
+bgImage.src = "../src/menu-img/background.jpg";
+logoImage.src = "../src/menu-img/logo.png";
+playImage.src = "../src/menu-img/play.png";
+creditsImage.src = "../src/menu-img/credits.png";
+
+let buttonX = [350, 270];
+let buttonY = [300, 400];
+//let buttonWidth = [240, 400];
+//let buttonHeight = [100, 100];
+
 const gameLoop = () => {
+  if(showMenu === true){
+    mainMenu();
+    return;
+  }
   ctx.drawImage(background,0,0);
   snake.move();
   snake.tailMove();
@@ -65,6 +85,17 @@ const gameLoop = () => {
 
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
+
+
+const mainMenu = () => {
+  ctx.clearRect(0,0, cw, ch);
+  ctx.drawImage(bgImage, 0, 0);
+  ctx.drawImage(logoImage, 400, 100);
+	ctx.drawImage(playImage, buttonX[0], buttonY[0]);
+  ctx.drawImage(creditsImage, buttonX[1], buttonY[1]);
+  
+  requestAnimationFrame(gameLoop);
+}
 
 //wyświetla ekran konca gry
 const gameOver = () => {
@@ -151,7 +182,6 @@ const screenEndOfGame = () => {
   ctx.fillText(textPressSpace, cw/2 - textPressSpaceSize.width/2 ,ch/2 + fontHeight/1.5);
   
   failed = true;
-
 }
 
 const level2 = () => {
@@ -195,6 +225,10 @@ document.addEventListener('keypress', ({ keyCode }) => {
   if (keyCode === 83 || (keyCode == 115 && snake.direction != 'UP')) snake.setDirection('DOWN');
   //Klawisz "K" do wydłużania węża
   if (keyCode === 107) snake.expandSnake();
+  //klawisz "R" do wyłączania menu głównego
+  if (keyCode === 82){
+    showMenu = false;
+    gameRestart();}
   // Spacja resetuje gre, jeżeli przegrana
   if (keyCode === 32) {
     if(failed) gameRestart();
