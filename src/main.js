@@ -86,7 +86,6 @@ const mainMenu = () => {
   ctx.drawImage(logoImage, 400, 100);
 	ctx.drawImage(playImage, buttonX[0], buttonY[0]);
   ctx.drawImage(creditsImage, buttonX[1], buttonY[1]);
-  
   requestAnimationFrame(gameLoop);
 }
 
@@ -174,7 +173,7 @@ const screenEndOfGame = () => {
   let textPressSpace = "Press Space to play again";
   let textPressSpaceSize = ctx.measureText(textPressSpace);
   ctx.fillText(textPressSpace, cw/2 - textPressSpaceSize.width/2 ,ch/2 + fontHeight/1.5);
-  
+  showMenu = true;
   failed = true;
 }
 
