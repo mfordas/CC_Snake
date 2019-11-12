@@ -60,23 +60,16 @@ const gameLoop = () => {
   }
 
   if (snake.tailLength >= 30 && screenReady2 === false && screenReady3 === false){
-    snake.speed = 0;
     screenLevel2();
-    if (screenLevel2() === true){
-    level2();
-    return;}
+    return;
   }
   
   if (snake.tailLength >= 40 && screenReady2 === true && screenReady3 === false) {
-    snake.speed = 0;
     screenLevel3();
-    if (screenLevel3() === true){
-    level3();
-    return;}
+    return;
   }
 
   if (snake.tailLength >= 50 && screenReady3 === true) {
-    snake.speed = 0;
     screenEndOfGame();
     return;
   }
@@ -152,6 +145,7 @@ const screenLevel2 = () => {
 }
 
 const screenLevel3 = () => {
+  ready2 = false;
   //Level 3
   let fontHeight = 50;
   ctx.font = 50 + "px Arial";
