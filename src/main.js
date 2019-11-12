@@ -233,8 +233,8 @@ document.addEventListener('keypress', ({ keyCode }) => {
 
 function navbarDataUpdate() {
   document.getElementById('name').innerHTML =  `name`;
-  document.getElementById('score').innerHTML =  `Score: ${snake.tailLength}`;
-  document.getElementById('multiplier').innerHTML =  `Multiplier: ${fm.multiplier}`;
+  document.getElementById('score-span').innerHTML =  `${snake.tailLength}`;
+  document.getElementById('multiplier-span').innerHTML =  `${fm.multiplier}`;
 }
 
 requestAnimationFrame(gameLoop);
