@@ -18,8 +18,8 @@ let snake = new Snake(50, 50);
 let background = new Image();
 background.src = "../src/walls/background.jpg";
 
-export let wallsRectObject = new Wall();
-export let wallsCircleObject = new WallCircle();
+let wallsRectObject = new Wall();
+let wallsCircleObject = new WallCircle();
 
 let wallsRect = wallsRectObject.addWallsRect();
 let wallsCircle = wallsCircleObject.addWallsCircle();
@@ -31,16 +31,20 @@ let showMenu = true;
 let bgImage = new Image();
 let logoImage = new Image();
 let playImage = new Image();
+let playActiveImage = new Image();
+let settingsImage = new Image();
 let creditsImage = new Image();
 bgImage.src = "../src/menu-img/background.jpg";
 logoImage.src = "../src/menu-img/logo.png";
 playImage.src = "../src/menu-img/play.png";
+playActiveImage.src = "../src/menu-img/play-active.png";
+settingsImage.src = "../src/menu-img/settings.png";
 creditsImage.src = "../src/menu-img/credits.png";
 
-let buttonX = [350, 270];
-let buttonY = [300, 400];
-//let buttonWidth = [240, 400];
-//let buttonHeight = [100, 100];
+let buttonX = [384, 298, 320];
+let buttonY = [250, 330, 410];
+//let buttonWidth = [192, 364, 320];
+//let buttonHeight = [80, 80, 80];
 
 const gameLoop = () => {
   if(showMenu === true){
@@ -83,9 +87,10 @@ const gameLoop = () => {
 const mainMenu = () => {
   ctx.clearRect(0,0, cw, ch);
   ctx.drawImage(bgImage, 0, 0);
-  ctx.drawImage(logoImage, 400, 100);
-	ctx.drawImage(playImage, buttonX[0], buttonY[0]);
-  ctx.drawImage(creditsImage, buttonX[1], buttonY[1]);
+  ctx.drawImage(logoImage, 400, 50);
+  ctx.drawImage(playImage, buttonX[0], buttonY[0]);
+  ctx.drawImage(settingsImage, buttonX[1], buttonY[1])
+  ctx.drawImage(creditsImage, buttonX[2], buttonY[2]);
   requestAnimationFrame(gameLoop);
 }
 
@@ -212,10 +217,10 @@ const level3 = () => {
 document.addEventListener('keypress', ({ keyCode }) => {
   console.log(keyCode);
 
-  if (keyCode === 65 || (keyCode == 97 && snake.direction != 'RIGHT')) snake.setDirection('LEFT');
-  if (keyCode === 68 || (keyCode == 100 && snake.direction != 'LEFT')) snake.setDirection('RIGHT');
-  if (keyCode === 87 || (keyCode == 119 && snake.direction != 'DOWN')) snake.setDirection('UP');
-  if (keyCode === 83 || (keyCode == 115 && snake.direction != 'UP')) snake.setDirection('DOWN');
+  if ((keyCode === 65 || keyCode == 97) && snake.direction != 'RIGHT') snake.setDirection('LEFT');
+  if ((keyCode === 68 || keyCode == 100) && snake.direction != 'LEFT') snake.setDirection('RIGHT');
+  if ((keyCode === 87 || keyCode == 119) && snake.direction != 'DOWN') snake.setDirection('UP');
+  if ((keyCode === 83 || keyCode == 115) && snake.direction != 'UP') snake.setDirection('DOWN');
   //Klawisz "K" do wydłużania węża
   if (keyCode === 107) snake.expandSnake();
   //klawisz "R" do wyłączania menu głównego
