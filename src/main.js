@@ -27,24 +27,35 @@ let wallsCircle = wallsCircleObject.addWallsCircle();
 let fm = new FoodManager(24, snake, wallsRectObject.wallsRect, wallsCircleObject.wallsCircle);
 
 //menu glowne
+let audio = new Audio();
+audio.src = "../src/menu-img/audio.mp3";
+let playSound = false;
+let mouseX;
+let mouseY;
 let showMenu = true;
 let bgImage = new Image();
 let logoImage = new Image();
 let playImage = new Image();
 let playActiveImage = new Image();
 let settingsImage = new Image();
+let settingsActiveImage = new Image();
 let creditsImage = new Image();
+let creditsActiveImage = new Image();
+
 bgImage.src = "../src/menu-img/background.jpg";
 logoImage.src = "../src/menu-img/logo.png";
 playImage.src = "../src/menu-img/play.png";
 playActiveImage.src = "../src/menu-img/play-active.png";
 settingsImage.src = "../src/menu-img/settings.png";
+settingsActiveImage.src = "../src/menu-img/settings-active.png";
 creditsImage.src = "../src/menu-img/credits.png";
+creditsActiveImage.src = "../src/menu-img/credits-active.png";
 
 let buttonX = [384, 298, 320];
-let buttonY = [250, 330, 410];
-//let buttonWidth = [192, 364, 320];
-//let buttonHeight = [80, 80, 80];
+let buttonY = [300, 380, 460];
+let buttonWidth = [192, 364, 320];
+let buttonHeight = [80, 80, 80];
+let buttonActive = [false, false, false] 
 
 const gameLoop = () => {
   if(showMenu === true){
@@ -91,6 +102,9 @@ const mainMenu = () => {
   ctx.drawImage(playImage, buttonX[0], buttonY[0]);
   ctx.drawImage(settingsImage, buttonX[1], buttonY[1])
   ctx.drawImage(creditsImage, buttonX[2], buttonY[2]);
+  if(buttonActive[0]) ctx.drawImage(playActiveImage, buttonX[0], buttonY[0]);
+  if(buttonActive[1]) ctx.drawImage(settingsActiveImage, buttonX[1], buttonY[1])
+  if(buttonActive[2]) ctx.drawImage(creditsActiveImage, buttonX[2], buttonY[2]);
   requestAnimationFrame(gameLoop);
 }
 
@@ -214,6 +228,48 @@ const level3 = () => {
   requestAnimationFrame(gameLoop);
 }
 
+
+
+const checkPosition = (mouseEvent) => {
+  mouseX = mouseEvent.pageX  - canvas.getBoundingClientRect().left; 
+  mouseY = mouseEvent.pageY - canvas.getBoundingClientRect().top;
+  //Test pozycji myszy
+  //console.log("X: " + mouseX + ", Y: " + mouseY);
+  for(let i = 0; i < buttonX.length; i++ ){
+    if(mouseX > buttonX[i] && (mouseX < buttonX[i] + buttonWidth[i])){
+      if((mouseY > buttonY[i]+20) && (mouseY < buttonY[i] + buttonHeight[i] - 10)){
+        buttonActive[i] = true;
+      }else{
+        buttonActive[i] = false;
+      }
+    }else{
+      buttonActive[i] = false;
+    }
+  }
+}
+canvas.addEventListener('mousemove', checkPosition);
+
+const checkClick = (mouseEvent) => {
+  for(let i = 0; i < buttonX.length; i++ ){
+    if(mouseX > buttonX[i] && (mouseX < buttonX[i] + buttonWidth[i])){
+      if((mouseY > buttonY[i]+20) && (mouseY < buttonY[i] + buttonHeight[i] - 10)){
+        if(buttonActive[0]){
+          showMenu = false;
+          gameRestart();
+        }
+        if(buttonActive[1])console.log("settings")
+        if(buttonActive[2])console.log("credits")
+      }
+    }
+  }
+}
+canvas.addEventListener('mouseup', checkClick);
+
+const playMusic = () => {
+  if(!playSound)audio.pause();
+  if(playSound)audio.play();
+}
+
 document.addEventListener('keypress', ({ keyCode }) => {
   console.log(keyCode);
 
@@ -223,6 +279,10 @@ document.addEventListener('keypress', ({ keyCode }) => {
   if ((keyCode === 83 || keyCode == 115) && snake.direction != 'UP') snake.setDirection('DOWN');
   //Klawisz "K" do wydłużania węża
   if (keyCode === 107) snake.expandSnake();
+  if (keyCode === 109 || keyCode === 77) {
+    playSound = !playSound;
+    playMusic()
+  }
   //klawisz "R" do wyłączania menu głównego
   if (keyCode === 82){
     showMenu = false;
