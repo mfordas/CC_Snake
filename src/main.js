@@ -3,6 +3,7 @@ import Wall from './wall';
 import WallCircle from './walls/wallCircle';
 import FoodManager from './foodManager';
 import * as menu from './menu';
+import { screenLevel2, screenLevel3, screenEndOfGame, ready2, ready3, readyReset } from './screenController';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
@@ -10,8 +11,7 @@ export const cw = canvas.width - 239;
 export const ch = canvas.height;
 
 let failed = false;
-let ready2 = false;
-let ready3 = false;
+
 let screenReady2 = false;
 let screenReady3 = false;
 let snake = new Snake(50, 50);
@@ -46,21 +46,19 @@ export const gameLoop = () => {
   }
 
   if (snake.tailLength >= 30 && screenReady2 === false && screenReady3 === false) {
-    screenLevel2();
-    return;
+    return screenLevel2();
   }
 
   if (snake.tailLength >= 40 && screenReady2 === true && screenReady3 === false) {
-    screenLevel3();
-    return;
+    return screenLevel3();
   }
 
   if (snake.tailLength >= 50 && screenReady3 === true) {
     screenEndOfGame();
+    failed = true;
     return;
   }
-
-
+  
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
 
@@ -84,8 +82,7 @@ const gameOver = () => {
 //restartuje gre
 export const gameRestart = () => {
   failed = false;
-  ready2 = false;
-  ready3 = false;
+  readyReset();
   screenReady2 = false;
   screenReady3 = false;
   //restart obiektów
@@ -101,55 +98,6 @@ export const gameRestart = () => {
   menu.rattle.play();
   //restart petli gry
   requestAnimationFrame(gameLoop);
-};
-
-const screenLevel2 = () => {
-  //Game over
-  let fontHeight = 50;
-  ctx.font = 50 + 'px Visitor';
-  let textGameOVer = 'Level 2!';
-  let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
-  //Press Space to restart
-  ctx.font = '20px Visitor';
-  let textPressSpace = 'Press Space to start';
-  let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-
-  ready2 = true;
-};
-
-const screenLevel3 = () => {
-  ready2 = false;
-  //Level 3
-  let fontHeight = 50;
-  ctx.font = 50 + 'px Visitor';
-  let textGameOVer = 'Level 3!';
-  let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
-  //Press Space to restart
-  ctx.font = '20px Visitor';
-  let textPressSpace = 'Press Space to start';
-  let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-
-  ready3 = true;
-};
-
-const screenEndOfGame = () => {
-  //Game over
-  let fontHeight = 50;
-  ctx.font = 45 + 'px Visitor';
-  let textGameOVer = 'End of the game! Thanks for playing!';
-  let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
-  //Press Space to restart
-  ctx.font = '20px Visitor';
-  let textPressSpace = 'Press Space to play again';
-  let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-  menu.showMenu = true;
-  failed = true;
 };
 
 const level2 = () => {
@@ -169,7 +117,7 @@ const level2 = () => {
 };
 
 const level3 = () => {
-  ready3 = false;
+  readyReset();
   ctx.clearRect(0, 0, cw, ch);
   snake = new Snake(50, 50);
   wallsCircleObject = new WallCircle();
