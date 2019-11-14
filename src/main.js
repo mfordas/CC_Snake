@@ -93,11 +93,11 @@ export const gameRestart = () => {
   //restart obiektów
   ctx.clearRect(0, 0, cw, ch);
   snake = new Snake(50, 50);
-  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
   wallsCircleObject.addWallsCircle();
   wallsRectObject.addWallsRect();
+  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
   menu.rattle.play();

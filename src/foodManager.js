@@ -48,26 +48,6 @@ class FoodManager {
         } while (
             (this.wallsRect.some(wall => nextX + this.foodSize > wall.x && nextX < wall.x + wall.length && nextY + this.foodSize > wall.y && nextY < wall.y + wall.height)) ||
             (this.wallsCircle.some(wall => nextX + this.foodSize > wall.x - wall.radius && nextX < wall.x + wall.radius && nextY + this.foodSize > wall.y - wall.radius && nextY < wall.y + wall.radius)));
-            /*(this.wallsRect.some(wall => 
-                nextX + this.foodSize >= wall.x &&
-                nextX + this.foodSize <= wall.x + wall.length &&
-                nextX <= wall.x + wall.length && 
-                nextX >= wall.x &&
-                nextY + this.foodSize >= wall.y && 
-                nextY + this.foodSize <= wall.y + wall.height &&
-                nextY <= wall.y + wall.height &&
-                nextY >= wall.y
-                )) ||
-            (this.wallsCircle.some(wall => 
-                nextX + this.foodSize >= wall.x - wall.radius &&
-                nextX + this.foodSize <= wall.x + wall.radius &&
-                nextX >= wall.x - wall.radius &&
-                nextX <= wall.x + wall.radius &&
-                nextY + this.foodSize >= wall.y - wall.radius &&
-                nextY + this.foodSize <= wall.y + wall.radius &&
-                nextY <= wall.y + wall.radius &&
-                nextY >= wall.y - wall.radius
-                )));*/
 
         let foodType = Math.floor(Math.random() * 100);
 
