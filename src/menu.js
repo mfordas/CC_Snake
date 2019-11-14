@@ -1,4 +1,4 @@
-import { ctx, cw, ch, canvas, gameLoop, gameRestart } from './main';
+import { ctx, cw, ch, canvas, gameLoop} from './main';
 
 let audio = new Audio();
 audio.src = '../src/menu-img/audio.mp3';
@@ -76,7 +76,6 @@ const checkClick = () => {
           showMenu = false;
           canvas.removeEventListener('mousemove', checkPosition);
           canvas.removeEventListener('mouseup', checkClick);
-          gameRestart();
         }
         if (buttonActive[1]) {
           console.log('settings');

@@ -190,10 +190,24 @@ canvas.addEventListener('mouseup', menu.checkClick);
 document.addEventListener('keypress', ({ keyCode }) => {
   console.log(keyCode);
 
-  if ((keyCode === 65 || keyCode == 97) && snake.direction != 'RIGHT') snake.setDirection('LEFT');
-  if ((keyCode === 68 || keyCode == 100) && snake.direction != 'LEFT') snake.setDirection('RIGHT');
-  if ((keyCode === 87 || keyCode == 119) && snake.direction != 'DOWN') snake.setDirection('UP');
-  if ((keyCode === 83 || keyCode == 115) && snake.direction != 'UP') snake.setDirection('DOWN');
+  if ((keyCode === 65 || keyCode == 97) && snake.direction != 'RIGHT' && snake.prevDirection !== null) {
+    snake.setDirection(snake.direction); 
+    snake.setDirection('LEFT');
+  }
+  if ((keyCode === 68 || keyCode == 100) && snake.direction != 'LEFT') {
+    snake.setprevDirection(snake.direction);
+    snake.prevDirection === null ? snake.prevDirection = '' : {};
+    snake.setDirection('RIGHT');
+  }
+  if ((keyCode === 87 || keyCode == 119) && snake.direction != 'DOWN'&& snake.prevDirection !== null) {
+    snake.setprevDirection(snake.direction); 
+    snake.setDirection('UP');
+  }
+  if ((keyCode === 83 || keyCode == 115) && snake.direction != 'UP') {
+    snake.setprevDirection(snake.direction);
+    snake.prevDirection === null ? snake.prevDirection = '' : {};
+    snake.setDirection('DOWN');
+  }
   //Klawisz "K" do wydłużania węża
   if (keyCode === 107 || keyCode === 75) snake.expandSnake();
   //Klawisz "M" do włączania dźwięków
@@ -219,4 +233,5 @@ function navbarDataUpdate() {
   document.getElementById('multiplier-span').innerHTML = `${fm.multiplier}`;
 }
 
+//menu.mainMenu();
 requestAnimationFrame(gameLoop);
