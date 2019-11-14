@@ -120,8 +120,12 @@ const windowOnClick = event => {
   }
 };
 
+const setShowMenu = value => {
+  showMenu = value;
+}
+
 closeButtonSettings.addEventListener('click', toggleModalSettings);
 closeButtonCredits.addEventListener('click', toggleModalCredits);
 window.addEventListener('click', windowOnClick);
 
-export { mainMenu, checkPosition, checkClick, playMusic, showMenu, playSound, playerName, rattle };
+export { mainMenu, checkPosition, checkClick, playMusic, setShowMenu ,showMenu, playSound, playerName, rattle };

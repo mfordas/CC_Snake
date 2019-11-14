@@ -251,8 +251,6 @@ class Snake {
     }
     this.tail[this.tailLength] = { x: this.x, y: this.y};
   }
-
-
 }
 
 export default Snake;

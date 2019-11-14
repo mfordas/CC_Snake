@@ -10,6 +10,7 @@ export const cw = canvas.width - 239;
 export const ch = canvas.height;
 
 let failed = false;
+let win = false;
 let ready2 = false;
 let ready3 = false;
 let screenReady2 = false;
@@ -86,6 +87,7 @@ export const gameRestart = () => {
   failed = false;
   ready2 = false;
   ready3 = false;
+  win = false;
   screenReady2 = false;
   screenReady3 = false;
   //restart obiektów
@@ -137,6 +139,7 @@ const screenLevel3 = () => {
 };
 
 const screenEndOfGame = () => {
+  ready3 = false;
   //Game over
   let fontHeight = 50;
   ctx.font = 50 + 'px Arial';
@@ -148,18 +151,18 @@ const screenEndOfGame = () => {
   let textPressSpace = 'Press Space to play again';
   let textPressSpaceSize = ctx.measureText(textPressSpace);
   ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-  menu.showMenu = true;
-  failed = true;
+  //menu.setShowMenu(true);         //menu nie jest wywoływane bo powoduje problem
+  win = true;
 };
 
 const level2 = () => {
   snake = new Snake(50, 50);
-  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   ctx.clearRect(0, 0, cw, ch);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
   wallsRect = wallsCircleObject.addWallsCircle_level2();
   wallsCircle = wallsRectObject.addWallsRect_level2();
+  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
   screenReady2 = true;
@@ -169,14 +172,14 @@ const level2 = () => {
 };
 
 const level3 = () => {
-  ready3 = false;
+  //ready3 = false;
   ctx.clearRect(0, 0, cw, ch);
   snake = new Snake(50, 50);
-  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
   wallsRect = wallsCircleObject.addWallsCircle_level3();
   wallsCircle = wallsRectObject.addWallsRect_level3();
+  fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
   screenReady3 = true;
@@ -224,8 +227,10 @@ document.addEventListener('keypress', ({ keyCode }) => {
     if (failed) gameRestart();
     if (ready2) level2();
     if (ready3) level3();
+    if (win) gameRestart();
   }
-});
+}
+);
 
 function navbarDataUpdate() {
   document.getElementById('name').innerHTML = `${menu.playerName}`;
