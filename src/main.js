@@ -39,6 +39,7 @@ export const gameLoop = () => {
   wallsCircleObject.drawWalls();
   wallsRectObject.drawWalls();
   fm.manageFood();
+  navbarDataUpdate();
   snake.draw();
   if (snake.onHit(wallsRectObject, wallsCircleObject)) {
     gameOver();
@@ -60,7 +61,6 @@ export const gameLoop = () => {
     return;
   }
 
-  navbarDataUpdate();
 
   requestAnimationFrame(gameLoop); // ta linijka musi być zawsze na końcu funkcji
 };
@@ -69,12 +69,12 @@ export const gameLoop = () => {
 const gameOver = () => {
   //Game over
   let fontHeight = 50;
-  ctx.font = 50 + 'px Arial';
+  ctx.font = 50 + 'px Visitor';
   let textGameOVer = 'Game Over';
   let textGameOverSize = ctx.measureText(textGameOVer);
   ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
   //Press Space to restart
-  ctx.font = '20px Arial';
+  ctx.font = '20px Visitor';
   let textPressSpace = 'Press Space to restart';
   let textPressSpaceSize = ctx.measureText(textPressSpace);
   ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
@@ -95,8 +95,8 @@ export const gameRestart = () => {
   snake = new Snake(50, 50);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
-  wallsCircleObject.addWallsCircle();
-  wallsRectObject.addWallsRect();
+  wallsCircle = wallsCircleObject.addWallsCircle();
+  wallsRect = wallsRectObject.addWallsRect();
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
@@ -108,12 +108,12 @@ export const gameRestart = () => {
 const screenLevel2 = () => {
   //Game over
   let fontHeight = 50;
-  ctx.font = 50 + 'px Arial';
+  ctx.font = 50 + 'px Visitor';
   let textGameOVer = 'Level 2!';
   let textGameOverSize = ctx.measureText(textGameOVer);
   ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
   //Press Space to restart
-  ctx.font = '20px Arial';
+  ctx.font = '20px Visitor';
   let textPressSpace = 'Press Space to start';
   let textPressSpaceSize = ctx.measureText(textPressSpace);
   ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
@@ -125,12 +125,12 @@ const screenLevel3 = () => {
   ready2 = false;
   //Level 3
   let fontHeight = 50;
-  ctx.font = 50 + 'px Arial';
+  ctx.font = 50 + 'px Visitor';
   let textGameOVer = 'Level 3!';
   let textGameOverSize = ctx.measureText(textGameOVer);
   ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
   //Press Space to restart
-  ctx.font = '20px Arial';
+  ctx.font = '20px Visitor';
   let textPressSpace = 'Press Space to start';
   let textPressSpaceSize = ctx.measureText(textPressSpace);
   ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
@@ -142,12 +142,12 @@ const screenEndOfGame = () => {
   ready3 = false;
   //Game over
   let fontHeight = 50;
-  ctx.font = 50 + 'px Arial';
+  ctx.font = 45 + 'px Visitor';
   let textGameOVer = 'End of the game! Thanks for playing!';
   let textGameOverSize = ctx.measureText(textGameOVer);
   ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
   //Press Space to restart
-  ctx.font = '20px Arial';
+  ctx.font = '20px Visitor';
   let textPressSpace = 'Press Space to play again';
   let textPressSpaceSize = ctx.measureText(textPressSpace);
   ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
@@ -160,8 +160,8 @@ const level2 = () => {
   ctx.clearRect(0, 0, cw, ch);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
-  wallsRect = wallsCircleObject.addWallsCircle_level2();
-  wallsCircle = wallsRectObject.addWallsRect_level2();
+  wallsCircle = wallsCircleObject.addWallsCircle_level2();
+  wallsRect = wallsRectObject.addWallsRect_level2();
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
@@ -177,8 +177,8 @@ const level3 = () => {
   snake = new Snake(50, 50);
   wallsCircleObject = new WallCircle();
   wallsRectObject = new Wall();
-  wallsRect = wallsCircleObject.addWallsCircle_level3();
-  wallsCircle = wallsRectObject.addWallsRect_level3();
+  wallsCircle = wallsCircleObject.addWallsCircle_level3();
+  wallsRect = wallsRectObject.addWallsRect_level3();
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
