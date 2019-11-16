@@ -3,6 +3,7 @@ import Wall from './wall';
 import WallCircle from './walls/wallCircle';
 import FoodManager from './foodManager';
 import * as menu from './menu';
+import * as levelChange from './walls/levelChanger';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
@@ -10,9 +11,6 @@ export const cw = canvas.width - 239;
 export const ch = canvas.height;
 
 let failed = false;
-let win = false;
-let ready2 = false;
-let ready3 = false;
 let screenReady2 = false;
 let screenReady3 = false;
 let snake = new Snake(50, 50);
@@ -30,6 +28,7 @@ let fm = new FoodManager(24, snake, wallsRectObject.wallsRect, wallsCircleObject
 
 export const gameLoop = () => {
   if (menu.showMenu === true) {
+    menu.rattle.play();
     menu.mainMenu();
     return;
   }
@@ -47,17 +46,17 @@ export const gameLoop = () => {
   }
 
   if (snake.tailLength >= 30 && screenReady2 === false && screenReady3 === false) {
-    screenLevel2();
+    levelChange.screenLevel2();
     return;
   }
 
   if (snake.tailLength >= 40 && screenReady2 === true && screenReady3 === false) {
-    screenLevel3();
+    levelChange.screenLevel3();
     return;
   }
 
   if (snake.tailLength >= 50 && screenReady3 === true) {
-    screenEndOfGame();
+    levelChange.screenEndOfGame();
     return;
   }
 
@@ -85,9 +84,9 @@ const gameOver = () => {
 //restartuje gre
 export const gameRestart = () => {
   failed = false;
-  ready2 = false;
-  ready3 = false;
-  win = false;
+  levelChange.setReady2(false);
+  levelChange.setReady3(false);
+  levelChange.setWin(false);
   screenReady2 = false;
   screenReady3 = false;
   //restart obiektów
@@ -103,56 +102,6 @@ export const gameRestart = () => {
   menu.rattle.play();
   //restart petli gry
   requestAnimationFrame(gameLoop);
-};
-
-const screenLevel2 = () => {
-  //Game over
-  let fontHeight = 50;
-  ctx.font = 50 + 'px Visitor';
-  let textGameOVer = 'Level 2!';
-  let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
-  //Press Space to restart
-  ctx.font = '20px Visitor';
-  let textPressSpace = 'Press Space to start';
-  let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-
-  ready2 = true;
-};
-
-const screenLevel3 = () => {
-  ready2 = false;
-  //Level 3
-  let fontHeight = 50;
-  ctx.font = 50 + 'px Visitor';
-  let textGameOVer = 'Level 3!';
-  let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
-  //Press Space to restart
-  ctx.font = '20px Visitor';
-  let textPressSpace = 'Press Space to start';
-  let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-
-  ready3 = true;
-};
-
-const screenEndOfGame = () => {
-  ready3 = false;
-  //Game over
-  let fontHeight = 50;
-  ctx.font = 45 + 'px Visitor';
-  let textGameOVer = 'End of the game! Thanks for playing!';
-  let textGameOverSize = ctx.measureText(textGameOVer);
-  ctx.fillText(textGameOVer, cw / 2 - textGameOverSize.width / 2, ch / 2);
-  //Press Space to restart
-  ctx.font = '20px Visitor';
-  let textPressSpace = 'Press Space to play again';
-  let textPressSpaceSize = ctx.measureText(textPressSpace);
-  ctx.fillText(textPressSpace, cw / 2 - textPressSpaceSize.width / 2, ch / 2 + fontHeight / 1.5);
-  //menu.setShowMenu(true);         //menu nie jest wywoływane bo powoduje problem
-  win = true;
 };
 
 const level2 = () => {
@@ -192,7 +141,8 @@ canvas.addEventListener('mouseup', menu.checkClick);
 
 document.addEventListener('keypress', ({ keyCode }) => {
   console.log(keyCode);
-
+  //Wyłączenie klawiszy gdy menu jest aktywne
+  if (menu.showMenu === false){
   if ((keyCode === 65 || keyCode == 97) && snake.direction != 'RIGHT' && snake.prevDirection !== null) {
     snake.setDirection(snake.direction); 
     snake.setDirection('LEFT');
@@ -211,23 +161,25 @@ document.addEventListener('keypress', ({ keyCode }) => {
     snake.prevDirection === null ? snake.prevDirection = '' : {};
     snake.setDirection('DOWN');
   }
+  
   //Klawisz "K" do wydłużania węża
   if (keyCode === 107 || keyCode === 75) snake.expandSnake();
   //Klawisz "M" do włączania dźwięków
   if (keyCode === 109 || keyCode === 77) {
     menu.playMusic();
   }
+}
   //klawisz "R" do wyłączania menu głównego
   if (keyCode === 82 || keyCode === 114) {
-    menu.showMenu = false;
+    menu.setShowMenu(false);
     gameRestart();
   }
   // Spacja resetuje gre, jeżeli przegrana
   if (keyCode === 32) {
     if (failed) gameRestart();
-    if (ready2) level2();
-    if (ready3) level3();
-    if (win) gameRestart();
+    if (levelChange.ready2) level2();
+    if (levelChange.ready3) level3();
+    if (levelChange.win) gameRestart();
   }
 }
 );

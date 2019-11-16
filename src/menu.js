@@ -10,7 +10,7 @@ rattle.src = '../src/menu-img/rattlesnake.mp3'
 let mouseX;
 let mouseY;
 
-let playerName;
+let playerName = 'Gamer';
 let showMenu = true;
 let bgImage = new Image();
 let logoImage = new Image();
@@ -47,6 +47,7 @@ const mainMenu = () => {
   if (buttonActive[1]) ctx.drawImage(settingsActiveImage, buttonX[1], buttonY[1]);
   if (buttonActive[2]) ctx.drawImage(creditsActiveImage, buttonX[2], buttonY[2]);
   requestAnimationFrame(gameLoop);
+  
 };
 
 const checkPosition = mouseEvent => {
@@ -122,10 +123,13 @@ const windowOnClick = event => {
 
 const setShowMenu = value => {
   showMenu = value;
-}
+};
+
 
 closeButtonSettings.addEventListener('click', toggleModalSettings);
 closeButtonCredits.addEventListener('click', toggleModalCredits);
 window.addEventListener('click', windowOnClick);
 
-export { mainMenu, checkPosition, checkClick, playMusic, setShowMenu ,showMenu, playSound, playerName, rattle };
+
+
+export {mainMenu, checkPosition, checkClick, playMusic, setShowMenu, showMenu, playSound, playerName, rattle};
