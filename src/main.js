@@ -28,7 +28,7 @@ let fm = new FoodManager(24, snake, wallsRectObject.wallsRect, wallsCircleObject
 
 export const gameLoop = () => {
   if (menu.showMenu === true) {
-    menu.rattle.play();
+    // menu.rattle.play();
     menu.mainMenu();
     return;
   }
@@ -99,7 +99,7 @@ export const gameRestart = () => {
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
   background.src = '../src/walls/background.jpg';
-  menu.rattle.play();
+  // menu.rattle.play();
   //restart petli gry
   requestAnimationFrame(gameLoop);
 };
@@ -166,7 +166,7 @@ document.addEventListener('keypress', ({ keyCode }) => {
   if (keyCode === 107 || keyCode === 75) snake.expandSnake();
   //Klawisz "M" do włączania dźwięków
   if (keyCode === 109 || keyCode === 77) {
-    menu.playMusic();
+    // menu.playMusic();
   }
 }
   //klawisz "R" do wyłączania menu głównego

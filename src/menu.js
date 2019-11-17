@@ -1,4 +1,12 @@
 import { ctx, cw, ch, canvas, gameLoop} from './main';
+import bgImageSrc from '../src/menu-img/background.jpg';
+import logoImageSrc from '../src/menu-img/logo.png';
+import playImageSrc from '../src/menu-img/play.png';
+import settingsImageSrc from '../src/menu-img/settings.png';
+import creditsImageSrc from '../src/menu-img/credits.png';
+import playActiveImageSrc from '../src/menu-img/play-active.png';
+import settingsActiveImageSrc from '../src/menu-img/settings-active.png';
+import creditsActiveImageSrc from '../src/menu-img/credits-active.png';
 
 let audio = new Audio();
 audio.src = '../src/menu-img/audio.mp3';
@@ -21,14 +29,14 @@ let playActiveImage = new Image();
 let settingsActiveImage = new Image();
 let creditsActiveImage = new Image();
 
-bgImage.src = '../src/menu-img/background.jpg';
-logoImage.src = '../src/menu-img/logo.png';
-playImage.src = '../src/menu-img/play.png';
-settingsImage.src = '../src/menu-img/settings.png';
-creditsImage.src = '../src/menu-img/credits.png';
-playActiveImage.src = '../src/menu-img/play-active.png';
-settingsActiveImage.src = '../src/menu-img/settings-active.png';
-creditsActiveImage.src = '../src/menu-img/credits-active.png';
+bgImage.src = bgImageSrc;
+logoImage.src = logoImageSrc;
+playImage.src = playImageSrc;
+settingsImage.src = settingsImageSrc;
+creditsImage.src = creditsImageSrc;
+playActiveImage.src = playActiveImageSrc;
+settingsActiveImage.src = settingsActiveImageSrc;
+creditsActiveImage.src = creditsActiveImageSrc;
 
 let buttonX = [384, 298, 320];
 let buttonY = [300, 380, 460];
@@ -91,11 +99,11 @@ const checkClick = () => {
   }
 };
 
-const playMusic = () => {
-  playSound = !playSound;
-  if (!playSound) audio.pause();
-  if (playSound) audio.play();
-};
+// const playMusic = () => {
+//   playSound = !playSound;
+//   if (!playSound) audio.pause();
+//   if (playSound) audio.play();
+// };
 
 //okna modalne
 let modalSettings = document.querySelector('.modalSettings');
@@ -132,4 +140,4 @@ window.addEventListener('click', windowOnClick);
 
 
 
-export {mainMenu, checkPosition, checkClick, playMusic, setShowMenu, showMenu, playSound, playerName, rattle};
+export {mainMenu, checkPosition, checkClick, /*playMusic,*/ setShowMenu, showMenu, playSound, playerName, rattle};
