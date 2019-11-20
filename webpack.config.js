@@ -25,6 +25,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.mp3$/i,
+        loader: 'file-loader'
+      },
     ],
   },
 };
