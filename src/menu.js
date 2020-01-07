@@ -7,13 +7,17 @@ import creditsImageSrc from '../src/menu-img/credits.png';
 import playActiveImageSrc from '../src/menu-img/play-active.png';
 import settingsActiveImageSrc from '../src/menu-img/settings-active.png';
 import creditsActiveImageSrc from '../src/menu-img/credits-active.png';
+//import audioSrc from '../src/menu-img/audio.mp3';
+//import rattlesnakeSrc from '../src/menu-img/rattlesnake.mp3';
 
-let audio = new Audio();
-audio.src = '../src/menu-img/audio.mp3';
+let audio = new Audio(require('../src/menu-img/audio.mp3'));
+//audioSrc = '../src/menu-img/audio.mp3';
+//audio.src = audioSrc;
 let playSound = false;
 
-let rattle = new Audio();
-rattle.src = '../src/menu-img/rattlesnake.mp3'
+let rattle = new Audio(require('../src/menu-img/rattlesnake.mp3'));
+//rattle.src = '../src/menu-img/rattlesnake.mp3'
+//rattle.src = rattlesnakeSrc;
 
 let mouseX;
 let mouseY;
@@ -99,11 +103,11 @@ const checkClick = () => {
   }
 };
 
-// const playMusic = () => {
-//   playSound = !playSound;
-//   if (!playSound) audio.pause();
-//   if (playSound) audio.play();
-// };
+ const playMusic = () => {
+   playSound = !playSound;
+   if (!playSound) audio.pause();
+   if (playSound) audio.play();
+ };
 
 //okna modalne
 let modalSettings = document.querySelector('.modalSettings');
@@ -140,4 +144,4 @@ window.addEventListener('click', windowOnClick);
 
 
 
-export {mainMenu, checkPosition, checkClick, /*playMusic,*/ setShowMenu, showMenu, playSound, playerName, rattle};
+export {mainMenu, checkPosition, checkClick, playMusic, setShowMenu, showMenu, playSound, playerName, rattle};
