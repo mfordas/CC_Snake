@@ -1,15 +1,20 @@
 import { ctx, cw, ch } from './main';
+import headIMGLeftSrc from '../src/snake-img/head-left.png';
+import headIMGRightSrc from '../src/snake-img/head-right.png';
+import headIMGUpSrc from '../src/snake-img/head-up.png';
+import headIMGDownSrc from '../src/snake-img/head-down.png';
+import tailIMGSrc from '../src/snake-img/tail.png';
 
 const headIMGLeft = new Image();
-headIMGLeft.src = '/src/snake-img/head-left.png';
+headIMGLeft.src = headIMGLeftSrc;
 const headIMGRight = new Image();
-headIMGRight.src = '/src/snake-img/head-right.png';
+headIMGRight.src = headIMGRightSrc;
 const headIMGUp = new Image();
-headIMGUp.src = '/src/snake-img/head-up.png';
+headIMGUp.src = headIMGUpSrc;
 const headIMGDown = new Image();
-headIMGDown.src = '/src/snake-img/head-down.png';
+headIMGDown.src = headIMGDownSrc;
 const tailIMG = new Image();
-tailIMG.src = '/src/snake-img/tail.png';
+tailIMG.src = tailIMGSrc;
 
 const imgSize = 1.2;
 
