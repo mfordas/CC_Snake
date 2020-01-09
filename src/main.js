@@ -99,7 +99,7 @@ export const gameRestart = () => {
   wallsRect = wallsRectObject.addWallsRect();
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
-  background.src = '../src/walls/background.jpg';
+  background.src = backgroundSrc;
   menu.rattle.play();
   //restart petli gry
   requestAnimationFrame(gameLoop);
@@ -114,7 +114,7 @@ const level2 = () => {
   wallsRect = wallsRectObject.addWallsRect_level2();
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
-  background.src = '../src/walls/background.jpg';
+  background.src = backgroundSrc;
   screenReady2 = true;
   menu.rattle.play();
   //restart petli gry
@@ -131,7 +131,7 @@ const level3 = () => {
   wallsRect = wallsRectObject.addWallsRect_level3();
   fm = new FoodManager(24, snake, wallsRect, wallsCircle);
   background = new Image();
-  background.src = '../src/walls/background.jpg';
+  background.src = backgroundSrc;
   screenReady3 = true;
   menu.rattle.play();
   //restart petli gry
