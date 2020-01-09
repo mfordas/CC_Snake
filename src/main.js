@@ -4,6 +4,7 @@ import WallCircle from './walls/wallCircle';
 import FoodManager from './foodManager';
 import * as menu from './menu';
 import * as levelChange from './walls/levelChanger';
+import backgroundSrc from '../src/walls/background.jpg';
 
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
@@ -16,7 +17,7 @@ let screenReady3 = false;
 let snake = new Snake(50, 50);
 
 let background = new Image();
-background.src = '../src/walls/background.jpg';
+background.src = backgroundSrc;
 
 let wallsRectObject = new Wall();
 let wallsCircleObject = new WallCircle();
